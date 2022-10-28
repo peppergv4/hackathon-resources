@@ -86,9 +86,9 @@ This lab will show you how to build a Docker image for a toy program, push it to
 
     ![Developer Settings](assets/images/gh-dev-settings.png)
 
-6. On the developer settings page, select "Personal Access Tokens".
+6. On the developer settings page, select "Personal Access Tokens" and then "Tokens (Classic)".
 
-    ![Select PAT](assets/images/gh-pat.png)
+    ![Select PAT](assets/images/gh-pat-classic.png)
 
 7. Click create new token.
 
