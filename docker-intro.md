@@ -125,6 +125,13 @@ This lab will show you how to build a Docker image for a toy program, push it to
     Login Succeeded
     ```
     Make sure to save your personal access token in a file somewhere on your machine. (I keep mine in my [password store](https://www.passwordstore.org/)). You'll want to use it later!
+    
+    ### Note:
+    In general, you shouldn't have to restart the Docker daemon, but if you do, this can be done with:
+    ```
+    sudo systemctl restart docker
+    ```
+    If you're using Docker Desktop you can simply stop and restart the application.
 
 ## Build and Push the Docker Image
 
