@@ -55,7 +55,7 @@ In the CMake and libFuzzer exercises, we forked the original or "upstream" mayhe
 
 2. There are two comments marked as TODO in the Dockerfile you'll need to change in your favorite text editor. For the first section, you need to add the build commands from steps 6-8 of the previous section using Dockerfile `RUN` entries. Under the second TODO, you need to change the COPY command so that it copies the libFuzzer executable (that you ran in step 9 of the previous section) into the packaging stage.
 
-    If you're stuck, ask!
+    If you're stuck, ask, or you can use [this](https://github.com/mayhemheroes/mayhem-cmake-example/blob/solution/Dockerfile) as a hint (although it may still require some modification), especially if you already have an existing `build` folder.
 
 3. Once you've created your Dockerfile, you can test the build process by running the following command:
 
@@ -146,7 +146,7 @@ With our Dockerfile, Mayhemfile, and Token configured, we're ready to setup the 
     mkdir -p .github/workflows
     ```
 
-2. Using your preferred text editor, create a new mayhem.yml with the following contents:
+2. Using your preferred text editor, create a new `mayhem.yml` file inside of the `.github/workflows` directory with the following contents:
 
     ```
     name: Mayhem
@@ -224,7 +224,7 @@ With our Dockerfile, Mayhemfile, and Token configured, we're ready to setup the 
     git config --global user.name "<Your name>"
     ```
     
-    Once the email and name have been set, you can go ahead and commit and push.
+    Once the email and name have been set, you can go ahead and commit and push. You will be promted for a username and password. Give your (lowercase) username and, for the password, use the same key that you used earlier to login to `ghcr.io` and that was saved aside (alternatively you can generate a new key or use SSH tokens to login as well).
     
     ```
     git add .
