@@ -193,13 +193,24 @@ With our Dockerfile, Mayhemfile, and Token configured, we're ready to setup the 
 
     jobs:
       build:
-        name: 'Build mayhem fuzzing container'
-        runs-on: ubuntu-latest
+        name: '${{ matrix.os }} shared=${{ matrix.shared }} ${{ matrix.build_type }}'
+        runs-on: ${{ matrix.os }}
+        strategy:
+          matrix:
+            os: [ubuntu-latest]
+            shared: [false]
+            build_type: [Release]
+            include:
+              - os: ubuntu-latest
+                triplet: x64-linux
+
         steps:
           - uses: actions/checkout@v2
+            with:
+              submodules: recursive
 
           - name: Log in to the Container registry
-            uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+            uses: docker/login-action@v2.1.0
             with:
               registry: ${{ env.REGISTRY }}
               username: ${{ github.actor }}
@@ -207,19 +218,19 @@ With our Dockerfile, Mayhemfile, and Token configured, we're ready to setup the 
 
           - name: Extract metadata (tags, labels) for Docker
             id: meta
-            uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+            uses: docker/metadata-action@v4.1.1
             with:
               images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
           - name: Build and push Docker image
-            uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+            uses: docker/build-push-action@v3.2.0
             with:
               context: .
-              file: mayhem/Dockerfile
               push: true
+              file: mayhem/Dockerfile
               tags: ${{ steps.meta.outputs.tags }}
               labels: ${{ steps.meta.outputs.labels }}
-
+    
         outputs:
           image: ${{ steps.meta.outputs.tags }}
 
@@ -242,6 +253,11 @@ With our Dockerfile, Mayhemfile, and Token configured, we're ready to setup the 
               mayhem-token: ${{ secrets.MAYHEM_TOKEN }}
               args: --image ${{ needs.build.outputs.image }} --file ${{ matrix.mayhemfile }} --duration 300
               sarif-output: sarif
+          
+          - name: Upload SARIF file(s)
+            uses: github/codeql-action/upload-sarif@v2
+            with:
+              sarif_file: sarif
     ```
     Alternatively if you can't easily copy/paste the above (e.g. if you are using a web-based VM), you can `wget` the file from the solutions branch.
 
