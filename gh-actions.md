@@ -31,13 +31,13 @@ In the CMake and libFuzzer exercises, we forked the original or "upstream" mayhe
 
     no changes added to commit (use "git add" and/or "git commit -a")
     ```
-    
+
 3.  We can go ahead and blow away that build directory:
-    
+
     ```
     rm -rf ./build
     ```
-    
+
 4. Then, let's make a directory where our Mayhem-specific changes will go.
 
     ```
@@ -55,7 +55,7 @@ In the CMake and libFuzzer exercises, we forked the original or "upstream" mayhe
 
 2. There are two comments marked as TODO in the Dockerfile you'll need to change in your favorite text editor. For the first section, you need to add the build commands from steps 6-8 of the previous section using Dockerfile `RUN` entries. Under the second TODO, you need to change the COPY command so that it copies the libFuzzer executable (that you ran in step 9 of the previous section) into the packaging stage.
 
-    If you're stuck, ask!
+    If you're stuck, ask, or you can use [this](https://github.com/mayhemheroes/mayhem-cmake-example/blob/solution/Dockerfile) as a hint (although it may still require some modification), especially if you already have an existing `build` folder.
 
 3. Once you've created your Dockerfile, you can test the build process by running the following command:
 
@@ -73,8 +73,8 @@ At the end you should see the the libFuzzer output again:
 
 ```
 INFO: Seed: 2682090316
-INFO: Loaded 1 modules   (7 inline 8-bit counters): 7 [0x4e8040, 0x4e8047), 
-INFO: Loaded 1 PC tables (7 PCs): 7 [0x4be940,0x4be9b0), 
+INFO: Loaded 1 modules   (7 inline 8-bit counters): 7 [0x4e8040, 0x4e8047),
+INFO: Loaded 1 PC tables (7 PCs): 7 [0x4be940,0x4be9b0),
 INFO: -max_len is not provided; libFuzzer will not generate inputs larger than 4096 bytes
 INFO: A corpus is not provided, starting from an empty corpus
 #2	INITED cov: 3 ft: 4 corp: 1/1b exec/s: 0 rss: 24Mb
@@ -110,7 +110,39 @@ artifact_prefix='./'; Test unit written to ./crash-6885858486f31043e5839c735d994
 Base64: YnVn
 ```
 
-If this is what you saw, congratulations you just automated the build and package process! 
+If this is what you saw, congratulations you just automated the build and package process!
+
+5. Now that the image is built, push the image to the registry like last time:
+
+```
+docker push ghcr.io/<Your GitHub Username>/mayhem-cmake-example:latest
+```
+
+6. Link the package to your `mayhem-cmake-example` repository as shown in the picture below.
+
+    On your "Packages" page, select the `mayhem-cmake-example` you just pushed out to GitHub. Once on the package page, under the "Link this package to a repository" section, select "Connect repository" and then choose "mayhem-cmake-example" from the list.
+    ![Link this package to a repository](assets/images/link_package_to_repository.png)
+
+
+7. Mark the package as public and allow writing to it
+
+    First click on the "Package settings" option as seen below.
+    ![Package settings](assets/images/package_settings.png)
+
+    Next at the bottom of the page in the visibility settings, click "Change visibility".
+    ![change_visibility](assets/images/change_visibility.png)
+
+    And then choose "public", type `mayhem-cmake-example` and click "I understand the consequences"
+    ![public_visibility](assets/images/package_public.png)
+
+    Next under "Actions repository access" click "Add repository"
+    ![add_repository](assets/images/add_actions_repo_access.png)
+
+    As you begin typing `mayhem-cmake-example` the repository will appear for you to click on. Click on it and the page will refresh.
+    ![repo_selection](assets/images/add-repo.png)
+
+    Lastly we need to set the permissions to "Write" instead of just "Read". In the "Manage Actions access" section, to the right of `mayhem-cmake-example` choose the role to be "Write".
+    ![write_selection](assets/images/set_to_write.png)
 
 Now it's time to create our Mayhemfile and setup the GitHub Action.
 
@@ -124,7 +156,7 @@ With your Dockerfile written, you just need to create a Mayhemfile which should 
     touch mayhem/Mayhemfile
     ```
 
-2. Open `mayhem/Mayhemfile` with your preferred text editor and paste the following contents in. 
+2. Open `mayhem/Mayhemfile` with your preferred text editor and paste the following contents in.
 
     ```
     project: mayhem-cmake-example
@@ -146,7 +178,7 @@ With our Dockerfile, Mayhemfile, and Token configured, we're ready to setup the 
     mkdir -p .github/workflows
     ```
 
-2. Using your preferred text editor, create a new mayhem.yml with the following contents:
+2. Using your preferred text editor, create a new `mayhem.yml` file inside of the `.github/workflows` directory with the following contents:
 
     ```
     name: Mayhem
@@ -223,24 +255,24 @@ With our Dockerfile, Mayhemfile, and Token configured, we're ready to setup the 
     git config --global user.email "<email>"
     git config --global user.name "<Your name>"
     ```
-    
-    Once the email and name have been set, you can go ahead and commit and push.
-    
+
+    Once the email and name have been set, you can go ahead and commit and push. You will be promted for a username and password. Give your (lowercase) username and, for the password, use the same key that you used earlier to login to `ghcr.io` and that was saved aside (alternatively you can generate a new key or use SSH tokens to login as well).
+
     ```
     git add .
     git commit -m 'add GitHub action to launch Mayhem'
     git push
     ```
-    
+
 4. When you push the changes in the previous step, GitHub will automatically start the first workflow run. Go to the actions tab out on GitHub.
-    
+
     ![actions_tab](assets/images/actions_tab.png)
 
 
 5. You can select the run and scroll down to the "Start Analysis" phase and you should see the link to the corresponding Mayhem run at the end of the output, here:
 
     ![Mayhem Run Link](assets/images/start-analysis-run-link.png)
-    
+
     Select that link and it should bring you to your Mayhem run. Congratulations, you've integrated a repository with Mayhem!
-    
+
     Note: if you're having issues (e.g. "installation not allowed to write organization package" or other buildx errors), try the steps outlined in [this article on our community forum](https://community.forallsecure.com/t/error-buildx-call-failed-with-error-denied-installation-not-allowed-to-write-organization-package/354/2).

@@ -2,15 +2,13 @@
 
 ## Useful Links
 
-- [Mayhem Online GUI](https://mayhem.forallsecure.com/)
+- [Sign up to Mayhem!](https://mayhem.forallsecure.com/)
 
 - [Mayhem Documentation](https://mayhem.forallsecure.com/docs/)
 
 - [Mayhem Community](https://community.forallsecure.com/)
 
-- [Discord Invite](https://discord.gg/UNBvxyq6)
-
-- [Survey](https://dydbdnwi0qu.typeform.com/to/jZEKf0it)
+- [Discord Invite](https://discord.gg/KhSGZnrEpp)
 
 ## Exercises
 

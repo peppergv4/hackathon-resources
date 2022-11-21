@@ -42,11 +42,11 @@ There are two tabs of analysis options: Basic and Advanced. We will be configuri
 
 ![Basic configuration](assets/images/basic-configuration-options.png)
 
-   2. Under **Advanced**, enable the **Advanced Triage** option and the **Code Coverage** task. 
+   2. Under **Advanced**, enable the **Advanced Triage** option and the **Code Coverage** task.
 
 ![Advanced configuration](assets/images/advanced-configuration-options.png)
 
-   
+
 ## Step 4. Click start run!
 
 Click the start run button at the bottom of your screen to begin analysis!
@@ -65,7 +65,7 @@ Congratulations!
 You've just:
   * Learned how to start a new Mayhem analysis job using the web interface.
   * Found your first exploitable bug using Mayhem!
-  
+
 # Lab 1b: Run with the Mayhem CLI
 
 ## Overview
@@ -173,7 +173,7 @@ There are different steps for reproducing on Linux vs. macOS. Refer to the [Linu
 
 The Mayhem run should have produced a crashing input for lighttpd. We can reproduce that crash locally. Download the test cases from the run by running `mayhem sync` in the same directory you ran `mayhem run`:
 ```
-mayhem sync . 
+mayhem sync .
 ```
 
 This would give the output:
@@ -188,7 +188,7 @@ Target synced at: '.'.
 
 Now if you were to check the files in your directory:
 ```
-ls 
+ls
 ```
 It would show something like:
 ```
@@ -200,23 +200,23 @@ We see that we have a `defects/` folder and a `testsuite/` folder. We can test s
 ```
 ls defects/
 ```
-Which shows the defect test case hash: 
+Which shows the defect test case hash:
 ```
 ba0dbafbd0b787a564635b887f77926ae0b3f979dcc72d30cf7fdb1707581919
 ```
 
 To run the lighttpd server, simply pass the image name to `docker run`, like so:
 ```
-docker run --name lighttpd forallsecure/lighttpd:vulnerable 
+docker run --name lighttpd forallsecure/lighttpd:vulnerable
 ```
 
 This will give the output:
 ```
-2022-04-15 20:52:14: (log.c.75) server started 
+2022-04-15 20:52:14: (log.c.75) server started
 ```
 That terminal is now hanging while the server runs so we can't use it to send commands until the server stops. If we open another terminal, we can send the crashing test case to our running server. To figure out where the server is, run `docker inspect` (and use `grep` to look for the IP address the container is using):
 ```
-docker inspect lighttpd | grep "IPAddress" 
+docker inspect lighttpd | grep "IPAddress"
 ```
 This command would point us to the IP Address:
 ```
@@ -231,8 +231,8 @@ nc 172.17.0.5 80 < ./testsuite/ba0dbafbd0b787a564635b887f77926ae0b3f979dcc72d30c
 If we switch back to the first terminal, we should see... nothing. The server is no longer running (it crashed!). In my shell (zsh), my terminal shows the exit status of the most recently run command. Below, you can see my terminal's output:
 
 ```
-2022-04-15 20:52:14: (log.c.75) server started 
-                                                                                                                   SEGV ✘ 
+2022-04-15 20:52:14: (log.c.75) server started
+                                                                                                                   SEGV ✘
 ```
 
 Notice the SEGV? Congratulations! You've reproduced your first defect!
@@ -242,9 +242,9 @@ Notice the SEGV? Congratulations! You've reproduced your first defect!
 Due to limitations with Docker for Mac, we have separate instructions to demonstrate reproducing the lighttpd vulnerability.
 
 ```
-mayhem sync . 
+mayhem sync .
 ```
-The output would be: 
+The output would be:
 ```
 WARNING: downloading file with sha {sha256} project_slug {project_slug} owner {owner}
 Downloaded: Mayhemfile.
@@ -255,14 +255,17 @@ Target synced at: '.'.
 ```
 Now check the files in the directory
 ```
-ls 
+ls
 ```
-It would show: 
+It would show:
 ```
 block_coverage.drcov  defects  func_coverage.json  line_coverage.lcov  Mayhemfile  tests
 ```
 
-Start a bash shell inside the container:
+The Docker daemon needs to be running--if you haven't used Docker recently, you
+can run `open -a Docker` or just search for Docker desktop and open it. This
+will start the daemon. One the daemon is started, we can bring up the container
+and drop into a bash shell, using this command:
 
 ```
 docker run --name lighttpd -it -v $PWD:/lighttpd forallsecure/lighttpd:vulnerable bash
@@ -273,7 +276,7 @@ This will bring you to a shell inside of the container. You can then launch ligh
 ```
 It should show:
 ```
-2022-04-15 21:22:14: (log.c.75) server started 
+2022-04-15 21:22:14: (log.c.75) server started
 ```
 
 In another terminal window, enter the same container with another bash shell:

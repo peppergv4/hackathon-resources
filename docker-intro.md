@@ -106,7 +106,7 @@ This lab will show you how to build a Docker image for a toy program, push it to
 
     ![Copy Token](assets/images/gh-copy-token.png)
 
-11. Back on the command-line, we'll use the `docker login` command to login to the GitHub container registry.
+11. Back on the command-line, we'll use the `docker login` command to login to the GitHub container registry. When using your username relative to GitHub or `ghcr.io`, make it all lowercase or you'll run into issues.
 
     ```
     docker login -u <Your GitHub Username> ghcr.io
