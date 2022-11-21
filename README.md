@@ -2,7 +2,7 @@
 
 ## Useful Links
 
-- [Mayhem Online GUI](https://mayhem.forallsecure.com/)
+- [Sign up to Mayhem!](https://mayhem.forallsecure.com/)
 
 - [Mayhem Documentation](https://mayhem.forallsecure.com/docs/)
 
