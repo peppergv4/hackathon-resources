@@ -24,42 +24,25 @@
 
     See the target requirements for more information on what qualifies for integration.
 
-2. Create a fork of the repo you want to integrate.
+2. Create a fork of the repo you want to integrate. (Please make sure you create a fork of the _mayhemheroes_ repo, NOT the upstream!)
 
-3. Integrate Mayhem into your Fork.
+3. Add additional harnessing or improve existing harnesses on the fork. You'll want to integrate your changes and ensure a successful action run _before_ submitting.
 
 4. Submit [this form](https://dydbdnwi0qu.typeform.com/to/YYJdU5wd).
 
 5. Once ForAllSecure validates your target and elligiblity, you'll be asked to submit a pull request to the repository under github.com/mayhemheroes. If requested during the review, make changes.
 
-6. Once your changes have been approved and merged, you'll get paid within 45 days!
-    * $100 for integration
-    * $200 if the number of tests per second is greater than 100
-    * $200 if the test suite size is greater than 100
-    * $200 if a new function harness is added
-    * $300 if defect(s) are discovered
+6. Once your changes have been approved and merged, you'll be eligible for an **all expenses paid trip to Key West, FL!**
 
 ## Target Checklist
 
-Targets that you wish to get paid for must meet the following criteria:
+Looking for a target to start working with? Start here!
 
-* Is a public repository on github.com.  Private repositories are currently not qualified.
+* Repos eligible for improvement have already been forked under github.com/mayhemheroes
 
-* Has 100 or more stars.
+* You **must** add new harnessing or improve existing harnessing to these repositories
 
-* All code is open source and available in source code format.
-
-    - Code is considered Open Source if the entire code base is licensed under one (or more) of [the recognized Open Source Initiative Licenses](https://opensource.org/licenses/alphabetical). 
-
-* Mayhem is not already integrated; you can find a list of integrated repositories [here](https://github.com/mayhemheroes).
-
-* The project is not already a part of OSS-Fuzz; you can find a list of integrated repositories [here](https://github.com/google/oss-fuzz/tree/master/projects).
-
-* The project has been active in the last 6 months.
-
-* The resulting Mayhem run generates > 10 new test cases.
-
-* The target isn't inappropriate (e.g. an integration of [fetlang (NSFW)](https://github.com/fetlang/fetlang) was submitted and, despite meeting the criteria above, was rejected).
+* Submissions will be graded on increased testsuite size, improved speed, added code coverage and defects found
 
 If in doubt, ask in Discord or on the Mayhem Community.
 
