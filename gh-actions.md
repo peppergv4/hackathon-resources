@@ -205,7 +205,7 @@ With our Dockerfile, Mayhemfile, and Token configured, we're ready to setup the 
                 triplet: x64-linux
 
         steps:
-          - uses: actions/checkout@v2
+          - uses: actions/checkout@v3
             with:
               submodules: recursive
 
@@ -245,7 +245,7 @@ With our Dockerfile, Mayhemfile, and Token configured, we're ready to setup the 
               - mayhem/Mayhemfile
 
         steps:
-          - uses: actions/checkout@v2
+          - uses: actions/checkout@v3
 
           - name: Start analysis for ${{ matrix.mayhemfile }}
             uses: ForAllSecure/mcode-action@v1
