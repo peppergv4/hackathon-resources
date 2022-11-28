@@ -226,13 +226,13 @@ This command would point us to the IP Address:
 ```
 We see that lighttpd is running on `172.17.0.5`. And we know that `ba0dbafbd0b787a564635b887f77926ae0b3f979dcc72d30cf7fdb1707581919` is the hash for our crashing test case. Now we have the info we need to reproduce the crash. First we must change into the `hackathon-resources/lighttpd` directory and then we can use netcat (`nc`) to send our crashing test case to our lighttpd server on port 80:
 ```
-nc 172.17.0.5 80 < ./testsuite/ba0dbafbd0b787a564635b887f77926ae0b3f979dcc72d30cf7fdb1707581919
+nc 172.17.0.5 80 < ./defects/ba0dbafbd0b787a564635b887f77926ae0b3f979dcc72d30cf7fdb1707581919
 ```
 If we switch back to the first terminal, we should see... nothing. The server is no longer running (it crashed!). In my shell (zsh), my terminal shows the exit status of the most recently run command. Below, you can see my terminal's output:
 
 ```
 2022-04-15 20:52:14: (log.c.75) server started
-                                                                                                                   SEGV ✘
+                                                                                                                   SEGV 
 ```
 
 Notice the SEGV? Congratulations! You've reproduced your first defect!
@@ -291,7 +291,7 @@ apt-get update && apt-get install -y netcat
 
 Send the payload to the running lighttpd server (check your test case hash - it might be different!):
 ```
-nc 127.0.0.1 80 < /lighttpd/testsuite/ba0dbafbd0b787a564635b887f77926ae0b3f979dcc72d30cf7fdb1707581919
+nc 127.0.0.1 80 < /lighttpd/defects/ba0dbafbd0b787a564635b887f77926ae0b3f979dcc72d30cf7fdb1707581919
 ```
 
 You should see in the first terminal window that lighttpd crashed!
