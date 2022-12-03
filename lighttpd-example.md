@@ -237,9 +237,9 @@ If we switch back to the first terminal, we should see... nothing. The server is
 
 Notice the SEGV? Congratulations! You've reproduced your first defect!
 
-#### macOS
+#### macOS/WSL
 
-Due to limitations with Docker for Mac, we have separate instructions to demonstrate reproducing the lighttpd vulnerability.
+Due to limitations with Docker for Mac/Docker Desktop, we have separate instructions to demonstrate reproducing the lighttpd vulnerability.
 
 ```
 mayhem sync .
