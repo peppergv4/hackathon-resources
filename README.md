@@ -32,7 +32,7 @@
 
 5. Once ForAllSecure validates your target and elligiblity, you'll be asked to submit a pull request to the repository under github.com/mayhemheroes. If requested during the review, make changes.
 
-6. Once your changes have been approved and merged, you'll be eligible for an **all expenses paid trip to Key West, FL!**
+6. Once your changes have been approved and merged, you'll be eligible for **up to $1000 for new integrations and $5000 for existing integrations!**
 
 ## Target Checklist
 
@@ -54,7 +54,9 @@ There are several small configuration steps that you'll need to take on your rep
 
 * Package has public visibility.
 
-* Fork repository is configured with a `MAYHEM_TOKEN` secret.
+* Repo has been linked and has read+write access to the package.
+
+You can check the reply to [this community post](https://community.forallsecure.com/t/error-buildx-call-failed-with-error-denied-installation-not-allowed-to-write-organization-package/354/3) for more troubleshooting tips.
 
 ## Other Resources
 
