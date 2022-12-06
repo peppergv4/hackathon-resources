@@ -55,12 +55,18 @@ In this exercise, we'll convert our cmake example into a libFuzzer target. While
     CC=clang CXX=clang++ cmake ..
     ```
 
-   Note, if you're on macOS, you need to use a different, non-Apple Clang. We suggest using Homebrew (see the development environment instructions). However, you will need to change CC and CXX variables to reflect the location where the clang is located. If you're using the homebrew llvm package, you can use this command:
+   Note, if you're on macOS, you need to use a different, non-Apple Clang. We suggest using Homebrew to install (if you haven't already) with:
+   
+   ```
+   brew install llvm
+   ```
+   
+   However, you will need to change CC and CXX variables to reflect the location where the clang is located. If you're using the homebrew llvm package, you can use this command:
 
    ```
-   CC=/opt/homebrew/Cellar/llvm/<your_version>/bin/clang CXX=/opt/homebrew/Cellar/llvm/<your_version>/bin/clang++ cmake .. 
+   CC=/opt/homebrew/Cellar/llvm/$(ls -1 /opt/homebrew/Cellar/llvm/ | head -1)/bin/clang CXX=/opt/homebrew/Cellar/llvm/$(ls -1 /opt/homebrew/Cellar/llvm/  | head -1)/bin/clang++ cmake ..
    # OR 
-   cmake .. -DCMAKE_CXX_COMPILER=/opt/homebrew/Cellar/llvm/<your_version>/bin/clang++ -DCMAKE_C_COMPILER=/opt/homebrew/Cellar/llvm/<your_version>/bin/clang
+   cmake .. -DCMAKE_C_COMPILER=/opt/homebrew/Cellar/llvm/$(ls -1 /opt/homebrew/Cellar/llvm/ | head -1)/bin/clang -DCMAKE_CXX_COMPILER=/opt/homebrew/Cellar/llvm/$(ls -1 /opt/homebrew/Cellar/llvm/ | head -1)/bin/clang++
    ```
 
 8. Now run `make` to build.
