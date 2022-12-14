@@ -6,6 +6,8 @@
 
 - [Mayhem Documentation](https://mayhem.forallsecure.com/docs/)
 
+- [Mayhem Tutorials] (https://mayhem.forallsecure.com/docs/tutorial/choose-your-path/)
+
 - [Mayhem Community](https://community.forallsecure.com/)
 
 - [Discord Invite](https://discord.gg/KhSGZnrEpp)
