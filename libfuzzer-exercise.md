@@ -2,7 +2,7 @@
 
 In this exercise, we'll convert our cmake example into a libFuzzer target. While we could analyze our `fuzzme` executable as-is in Mayhem, converting to a libFuzzer target allows us to take advantage of libFuzzer's extra features.
 
-1. Open `fuzzme.c` in your favorite text editor.
+1. Open `fuzzme.c` in your favorite text editor (this file is under the top-level `mayhem-cmake-example/` directory, not the `mayhem-cmake-example/build` directory).
 
 2. In a libFuzzer target, you don't need a main function. Instead, payloads are deliviered directly to a function with the following signature: `int LLVMFuzzerTestOneInput(char* data, size_t size)`. Try modifying `fuzzme.c` so that a function called `LLVMFuzzerTestOneInput` calls the candidate function (`fuzzme(...)`).
 
