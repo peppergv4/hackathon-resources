@@ -18,9 +18,10 @@ Now you have your own fork of the `mayhem-cmake-example` repo. Next, we'll clone
 
 ## Clone and Run Locally
 
-1. In a terminal, clone mayhem-cmake-example and change into the directory.
+1. In a terminal, clone mayhem-cmake-example and change into the directory. (You'll want to leave the `hackathon-resources` directory first)
 
     ```
+    cd ~/
     git clone https://github.com/<Your Github Username>/mayhem-cmake-example
     cd mayhem-cmake-example/
     ```
