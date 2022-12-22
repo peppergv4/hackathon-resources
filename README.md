@@ -34,7 +34,7 @@
 
 5. Once ForAllSecure validates your target and elligiblity, you'll be asked to submit a pull request to the repository under github.com/mayhemheroes. If requested during the review, make changes.
 
-6. Once your changes have been approved and merged, you'll be eligible for **up to $1000 for new integrations and $5000 for existing integrations!**
+6. Once your changes have been approved and merged, you'll be eligible for **up to $1000 for new integrations and $500 for existing integrations!**
 
 ## Target Checklist
 
