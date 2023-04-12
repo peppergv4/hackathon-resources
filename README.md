@@ -28,7 +28,7 @@
 
     See the target requirements for more information on what qualifies for integration.
 
-2. Create a fork of the repo you want to integrate. (Please make sure you create a fork of the _mayhemheroes_ repo, NOT the upstream!)
+2. Create a fork of the repo you want to integrate. (If you are integrating an existing repo, please make sure you create a fork of the _mayhemheroes_ repo, NOT the upstream!)
 
 3. Add additional harnessing or improve existing harnesses on the fork. You'll want to integrate your changes and ensure a successful action run _before_ submitting.
 
