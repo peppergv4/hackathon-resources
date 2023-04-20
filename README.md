@@ -56,6 +56,12 @@ New repo submissions must meet the following requirements:
 
 * Nothing inappropriate - if you’re not sure, just ask
 
+An easy way to find eligible repos would be to run this one-liner:
+```
+comm -23 <(comm -23 <(gh search repos --stars ">100" --language "C,C++,Rust,Python,Ada,Java,Fortran,Go" --updated "<$(date +%Y-%m-%d -d "6 months ago")" --include-forks false --json name -q ".[].name" --limit 1000 | sort) <(gh repo list mayhemheroes --fork --visibility public --json name -q ".[].name" --limit 1000 | sort)) <(gh api '/repos/google/oss-fuzz/contents/projects?recursive=false' -q '.[].name' | sort)
+```
+
+NOTE: This will only return names. It's up to you to find the corresponding repo, as well as sanity check the result to see if it indeed does meet all the requirements.
 
 ### Improving existing repos
 
