@@ -42,7 +42,26 @@
 
 Looking for a target to start working with? Start here!
 
-* Repos eligible for improvement have already been forked under github.com/mayhemheroes
+### Submitting new repos
+
+New repo submissions must meet the following requirements:
+
+* Must not already exist under github.com/mayhemheroes
+
+* Over 100 stars
+
+* Active (has a commit from the past 6 months)
+
+* Not a part of OSS-Fuzz (fuzzing integration already exists, that would be too easy! check here https://github.com/google/oss-fuzz/tree/master/projects)
+
+* Nothing inappropriate - if you’re not sure, just ask
+
+
+### Improving existing repos
+
+Existing repo submissions must meet the following requirements:
+
+* Repos eligible for improvement _have_ already been forked under github.com/mayhemheroes
 
 * You **must** add new harnessing or improve existing harnessing to these repositories
 
