@@ -28,7 +28,7 @@
 
     See the target requirements for more information on what qualifies for integration.
 
-2. Create a fork of the repo you want to integrate. (Please make sure you create a fork of the _mayhemheroes_ repo, NOT the upstream!)
+2. Create a fork of the repo you want to integrate. (If you are integrating an existing repo, please make sure you create a fork of the _mayhemheroes_ repo, NOT the upstream!)
 
 3. Add additional harnessing or improve existing harnesses on the fork. You'll want to integrate your changes and ensure a successful action run _before_ submitting.
 
@@ -42,7 +42,32 @@
 
 Looking for a target to start working with? Start here!
 
-* Repos eligible for improvement have already been forked under github.com/mayhemheroes
+### Submitting new repos
+
+New repo submissions must meet the following requirements:
+
+* Must not already exist under github.com/mayhemheroes
+
+* Over 100 stars
+
+* Active (has a commit from the past 6 months)
+
+* Not a part of OSS-Fuzz (fuzzing integration already exists, that would be too easy! check here https://github.com/google/oss-fuzz/tree/master/projects)
+
+* Nothing inappropriate - if you’re not sure, just ask
+
+An easy way to find eligible repos would be to run this one-liner:
+```
+comm -23 <(comm -23 <(gh search repos --stars ">100" --language "C,C++,Rust,Python,Ada,Java,Fortran,Go" --updated "<$(date +%Y-%m-%d -d "6 months ago")" --include-forks false --json name -q ".[].name" --limit 1000 | sort) <(gh repo list mayhemheroes --fork --visibility public --json name -q ".[].name" --limit 1000 | sort)) <(gh api '/repos/google/oss-fuzz/contents/projects?recursive=false' -q '.[].name' | sort)
+```
+
+NOTE: This will only return names. It's up to you to find the corresponding repo, as well as sanity check the result to see if it indeed does meet all the requirements.
+
+### Improving existing repos
+
+Existing repo submissions must meet the following requirements:
+
+* Repos eligible for improvement _have_ already been forked under github.com/mayhemheroes
 
 * You **must** add new harnessing or improve existing harnessing to these repositories
 
