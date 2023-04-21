@@ -1,6 +1,9 @@
 # Hackathon Resources
 
-## Phase III has begun!
+ 
+```
+> mayhemheroes.phase_iii.init();
+```
 
 ## Useful Links
 
