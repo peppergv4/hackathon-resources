@@ -1,6 +1,6 @@
 # Hackathon Resources
 
-## Phase II of the Heroes Program closed at the end of December, 2022 - stay tuned for more information on Phase III
+## Phase III has begun!
 
 ## Useful Links
 
@@ -32,7 +32,7 @@
 
 3. Add additional harnessing or improve existing harnesses on the fork. You'll want to integrate your changes and ensure a successful action run _before_ submitting.
 
-4. Submit [this form](https://www.youtube.com/watch?v=dQw4w9WgXcQ).
+4. Submit [this form](https://dydbdnwi0qu.typeform.com/to/WWtkRLQn).
 
 5. Once ForAllSecure validates your target and elligiblity, you'll be asked to submit a pull request to the repository under github.com/mayhemheroes. If requested during the review, make changes.
 
