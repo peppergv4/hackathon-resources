@@ -64,9 +64,9 @@ In this exercise, we'll convert our cmake example into a libFuzzer target. While
    However, you will need to change CC and CXX variables to reflect the location where the clang is located. If you're using the homebrew llvm package, you can use this command:
 
    ```
-   CC=/opt/homebrew/Cellar/llvm/$(ls -1 /opt/homebrew/Cellar/llvm/ | head -1)/bin/clang CXX=/opt/homebrew/Cellar/llvm/$(ls -1 /opt/homebrew/Cellar/llvm/  | head -1)/bin/clang++ cmake ..
+   CC=/usr/local/Cellar/llvm/$(ls -1 /usr/local/Cellar/llvm/ | head -1)/bin/clang CXX=/usr/local/Cellar/llvm/$(ls -1 /usr/local/Cellar/llvm/  | head -1)/bin/clang++ cmake ..
    # OR 
-   cmake .. -DCMAKE_C_COMPILER=/opt/homebrew/Cellar/llvm/$(ls -1 /opt/homebrew/Cellar/llvm/ | head -1)/bin/clang -DCMAKE_CXX_COMPILER=/opt/homebrew/Cellar/llvm/$(ls -1 /opt/homebrew/Cellar/llvm/ | head -1)/bin/clang++
+   cmake .. -DCMAKE_C_COMPILER=/usr/local/Cellar/llvm/$(ls -1 /usr/local/Cellar/llvm/ | head -1)/bin/clang -DCMAKE_CXX_COMPILER=/usr/local/Cellar/llvm/$(ls -1 /usr/local/Cellar/llvm/ | head -1)/bin/clang++
    ```
 
 8. Now run `make` to build.
