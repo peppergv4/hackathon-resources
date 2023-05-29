@@ -4,24 +4,16 @@
   
 
 In this exercise, we'll convert our cmake example into a libFuzzer target. While we could analyze our `fuzzme` executable as-is in Mayhem, converting to a libFuzzer target allows us to take advantage of libFuzzer's extra features.
-
   
 
 1. Open `fuzzme.c` in your favorite text editor (this file is under the top-level `mayhem-cmake-example/` directory, not the `mayhem-cmake-example/build` directory).
 
-  
-
 2. In a libFuzzer target, you don't need a main function. Instead, payloads are deliviered directly to a function with the following signature: `int LLVMFuzzerTestOneInput(char* data, size_t size)`. Try modifying `fuzzme.c` so that a function called `LLVMFuzzerTestOneInput` calls the candidate function (`fuzzme(...)`).
 
-  
 
 If you can't figure it out, ask! (There is also a solution branch on the repo if you get really stuck)
 
-  
-
 3. Back in your build folder, try running `make` again. You should see output indicating that the build failed.
-
-  
 
 ```
 [ 50%] Building C object CMakeFiles/fuzzme.dir/fuzzme.c.o
@@ -34,15 +26,9 @@ make[1]: *** [CMakeFiles/Makefile2:76: CMakeFiles/fuzzme.dir/all] Error 2
 make: *** [Makefile:84: all] Error 2
 ```
 
-  
-
 The build failed because the linker is expecting a main function, but we removed it! libFuzzer targets provide their own main, so we need to modify the build system to take this into account.
 
-  
-
 4. Now open `CMakeLists.txt` in your favorite text editor and uncomment the compilation and linker options. The end of your `CMakeLists.txt` should look similar to this:
-
-  
 
 ```
 ...
@@ -53,11 +39,7 @@ target_compile_options(fuzzme PUBLIC -fsanitize=fuzzer)
 target_link_options(fuzzme PUBLIC -fsanitize=fuzzer)
 ```
 
-  
-
 5. Try running `make` in your build folder again. Again, it will fail. We need to tell CMake to configure our build to use clang because libFuzzer depends on clang.
-
-  
 
 ```
 CMake Error at CMakeLists.txt:8 (message):
@@ -67,37 +49,23 @@ Clang is required for libFuzzer!
 
 6. Delete the contents of your build tree (remember, you should be in the `build` folder we created earlier):
 
-  
-
 ```
 rm -rf *
 ```
 
-  
-
 7. Now re-run cmake with the `CC` and `CXX` environment variables set to `clang` and `clang++` respectively. This will override the CMake default of `gcc` and `g++`.
-
-  
 
 ```
 CC=clang CXX=clang++ cmake ..
 ```
 
-  
-
 Note, if you're on macOS, you need to use a different, non-Apple Clang. We suggest using Homebrew to install (if you haven't already) with:
-
-  
 
 ```
 brew install llvm
 ```
 
-  
-
 However, you will need to change CC and CXX variables to reflect the location where the clang is located. If you're using the homebrew llvm package, you can use this command:
-
-  
 
 ```
 CC=/usr/local/Cellar/llvm/$(ls -1 /usr/local/Cellar/llvm/ | head -1)/bin/clang CXX=/usr/local/Cellar/llvm/$(ls -1 /usr/local/Cellar/llvm/ | head -1)/bin/clang++ cmake ..
@@ -106,8 +74,6 @@ CC=/usr/local/Cellar/llvm/$(ls -1 /usr/local/Cellar/llvm/ | head -1)/bin/clang C
 
 cmake .. -DCMAKE_C_COMPILER=/usr/local/Cellar/llvm/$(ls -1 /usr/local/Cellar/llvm/ | head -1)/bin/clang -DCMAKE_CXX_COMPILER=/usr/local/Cellar/llvm/$(ls -1 /usr/local/Cellar/llvm/ | head -1)/bin/clang++
 ```
-
-  
 
 - ##### macOS Homebrew LLVM Installation Note:
 
@@ -125,26 +91,16 @@ cmake .. -DCMAKE_C_COMPILER=/usr/local/Cellar/llvm/$(ls -1 /usr/local/Cellar/llv
 
 	This should be sufficient to set the proper locations for the CC and CXX variables to access the right version of clang and clang++ needed to compile with libfuzzer.
 
-  
-
 8. Now run `make` to build.
 
-  
-
 9. You should now have a new `fuzzme` executable. Run it.
-
-  
 
 ```
 ./fuzzme
 ```
 
-  
-
 If you see output similar to the above, congratulations you just created a libFuzzer target!
-
-  
-
+ 
 ```
 INFO: Seed: 2682090316
 INFO: Loaded 1 modules (7 inline 8-bit counters): 7 [0x4e8040, 0x4e8047),
