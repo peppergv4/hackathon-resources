@@ -15,89 +15,89 @@ If you can't figure it out, ask! (There is also a solution branch on the repo if
 
 3. Back in your build folder, try running `make` again. You should see output indicating that the build failed.
 
-```
-[ 50%] Building C object CMakeFiles/fuzzme.dir/fuzzme.c.o
-[100%] Linking C executable fuzzme
-/usr/bin/ld: /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o: in function `_start':
-(.text+0x24): undefined reference to `main'
-collect2: error: ld returned 1 exit status
-make[2]: *** [CMakeFiles/fuzzme.dir/build.make:84: fuzzme] Error 1
-make[1]: *** [CMakeFiles/Makefile2:76: CMakeFiles/fuzzme.dir/all] Error 2
-make: *** [Makefile:84: all] Error 2
-```
+	```
+	[ 50%] Building C object CMakeFiles/fuzzme.dir/fuzzme.c.o
+	[100%] Linking C executable fuzzme
+	/usr/bin/ld: /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o: in function `_start':
+	(.text+0x24): undefined reference to `main'
+	collect2: error: ld returned 1 exit status
+	make[2]: *** [CMakeFiles/fuzzme.dir/build.make:84: fuzzme] Error 1
+	make[1]: *** [CMakeFiles/Makefile2:76: CMakeFiles/fuzzme.dir/all] Error 2
+	make: *** [Makefile:84: all] Error 2
+	```
 
 The build failed because the linker is expecting a main function, but we removed it! libFuzzer targets provide their own main, so we need to modify the build system to take this into account.
 
 4. Now open `CMakeLists.txt` in your favorite text editor and uncomment the compilation and linker options. The end of your `CMakeLists.txt` should look similar to this:
 
-```
-...
-if (NOT CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-	message(FATAL_ERROR "Clang is required for libFuzzer!")
-endif()
-target_compile_options(fuzzme PUBLIC -fsanitize=fuzzer)
-target_link_options(fuzzme PUBLIC -fsanitize=fuzzer)
-```
+	```
+	...
+	if (NOT CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+		message(FATAL_ERROR "Clang is required for libFuzzer!")
+	endif()
+	target_compile_options(fuzzme PUBLIC -fsanitize=fuzzer)
+	target_link_options(fuzzme PUBLIC -fsanitize=fuzzer)
+	```
 
 5. Try running `make` in your build folder again. Again, it will fail. We need to tell CMake to configure our build to use clang because libFuzzer depends on clang.
 
-```
-CMake Error at CMakeLists.txt:8 (message):
-Clang is required for libFuzzer!
--- Configuring incomplete, errors occurred!
-```
+	```
+	CMake Error at CMakeLists.txt:8 (message):
+	Clang is required for libFuzzer!
+	-- Configuring incomplete, errors occurred!
+	```
 
 6. Delete the contents of your build tree (remember, you should be in the `build` folder we created earlier):
 
-```
-rm -rf *
-```
+	```
+	rm -rf *
+	```
 
 7. Now re-run cmake with the `CC` and `CXX` environment variables set to `clang` and `clang++` respectively. This will override the CMake default of `gcc` and `g++`.
 
-```
-CC=clang CXX=clang++ cmake ..
-```
+	```
+	CC=clang CXX=clang++ cmake ..
+	```
 
-Note, if you're on macOS, you need to use a different, non-Apple Clang. We suggest using Homebrew to install (if you haven't already) with:
-
-```
-brew install llvm
-```
-
-However, you will need to change CC and CXX variables to reflect the location where the clang is located. If you're using the homebrew llvm package, you can use this command:
-
-```
-CC=/usr/local/Cellar/llvm/$(ls -1 /usr/local/Cellar/llvm/ | head -1)/bin/clang CXX=/usr/local/Cellar/llvm/$(ls -1 /usr/local/Cellar/llvm/ | head -1)/bin/clang++ cmake ..
-
-# OR
-
-cmake .. -DCMAKE_C_COMPILER=/usr/local/Cellar/llvm/$(ls -1 /usr/local/Cellar/llvm/ | head -1)/bin/clang -DCMAKE_CXX_COMPILER=/usr/local/Cellar/llvm/$(ls -1 /usr/local/Cellar/llvm/ | head -1)/bin/clang++
-```
-
-- ##### macOS Homebrew LLVM Installation Note:
-
-	Based on a combination of factors, such as chiptype (Intel vs. Apple Silicon), installation directory, and other unknown factors, the place that Homebrew installs llvm may differ. In the code above, it is assumed Homebrew's installations are located in `/usr/local/Cellar/`, and `clang` and `clang++` are in `/usr/local/Cellar/llvm/version/bin/`. However, it's possible that your version of Homebrew installs packages in `/opt/homebrew/Cellar`. If
+	Note, if you're on macOS, you need to use a different, non-Apple Clang. We suggest using Homebrew to install (if you haven't already) with:
 
 	```
+	brew install llvm
+	```
+
+	However, you will need to change CC and CXX variables to reflect the location where the clang is located. If you're using the homebrew llvm package, you can use this command:
+
+	```
+	CC=/usr/local/Cellar/llvm/$(ls -1 /usr/local/Cellar/llvm/ | head -1)/bin/clang CXX=/usr/local/Cellar/llvm/$(ls -1 /usr/local/Cellar/llvm/ | head -1)/bin/clang++ cmake ..
+
+	# OR
+
 	cmake .. -DCMAKE_C_COMPILER=/usr/local/Cellar/llvm/$(ls -1 /usr/local/Cellar/llvm/ | head -1)/bin/clang -DCMAKE_CXX_COMPILER=/usr/local/Cellar/llvm/$(ls -1 /usr/local/Cellar/llvm/ | head -1)/bin/clang++
 	```
 
-	gives an error, try changing the location to match your system-specific location. For some users, this is as follows:
+	- ##### macOS Homebrew LLVM Installation Note:
 
-	```
-	cmake .. -DCMAKE_C_COMPILER=/opt/homebrew/Cellar/llvm/$(ls -1 /opt/homebrew/Cellar/llvm/ | head -1)/bin/clang -DCMAKE_CXX_COMPILER=/opt/homebrew/Cellar/llvm/$(ls -1 /opt/homebrew/Cellar/llvm/ | head -1)/bin/clang++
-	```
+		Based on a combination of factors, such as chiptype (Intel vs. Apple Silicon), installation directory, and other unknown factors, the place that Homebrew installs llvm may differ. In the code above, it is assumed Homebrew's installations are located in `/usr/local/Cellar/`, and `clang` and `clang++` are in `/usr/local/Cellar/llvm/version/bin/`. However, it's possible that your version of Homebrew installs packages in `/opt/homebrew/Cellar`. If
 
-	This should be sufficient to set the proper locations for the CC and CXX variables to access the right version of clang and clang++ needed to compile with libfuzzer.
+		```
+		cmake .. -DCMAKE_C_COMPILER=/usr/local/Cellar/llvm/$(ls -1 /usr/local/Cellar/llvm/ | head -1)/bin/clang -DCMAKE_CXX_COMPILER=/usr/local/Cellar/llvm/$(ls -1 /usr/local/Cellar/llvm/ | head -1)/bin/clang++
+		```
+
+		gives an error, try changing the location to match your system-specific location. For some users, this is as follows:
+
+		```
+		cmake .. -DCMAKE_C_COMPILER=/opt/homebrew/Cellar/llvm/$(ls -1 /opt/homebrew/Cellar/llvm/ | head -1)/bin/clang -DCMAKE_CXX_COMPILER=/opt/homebrew/Cellar/llvm/$(ls -1 /opt/homebrew/Cellar/llvm/ | head -1)/bin/clang++
+		```
+
+		This should be sufficient to set the proper locations for the CC and CXX variables to access the right version of clang and clang++ needed to compile with libfuzzer.
 
 8. Now run `make` to build.
 
 9. You should now have a new `fuzzme` executable. Run it.
 
-```
-./fuzzme
-```
+	```
+	./fuzzme
+	```
 
 If you see output similar to the above, congratulations you just created a libFuzzer target!
  
